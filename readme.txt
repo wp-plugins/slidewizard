@@ -31,6 +31,12 @@ The manual installation method involves downloading our feature-rich plugin and 
 
 Automatic updates should work a charm; as always though, ensure you backup your site just in case.
 
+== Screenshots ==
+
+1. SlideWizard Plugin Panel.
+2. Create Slide
+3. Insert your SlideWizard into the post.
+
 == Changelog ==
 = 1.0.2 =
 * Update Dashboard Style
