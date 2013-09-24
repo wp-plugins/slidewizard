@@ -3,7 +3,7 @@
 Plugin Name: SlideWizard
 Plugin URI: http://colorlabsproject.com/plugins/slidewizard/
 Description: Description
-Version: 1.0
+Version: 1.0.2
 Author: ColorLabs & Company
 Author URI: http://colorlabsproject.com/
 */
@@ -46,7 +46,7 @@ class SlideWizard {
   static $namespace = "slidewizard";
   static $friendly_name = "SlideWizard";
   
-  static $version = '1.0.0';
+  static $version = '1.0.2';
 
   // Environment, 'development' or 'production'
   // Don't forget to change back to production
@@ -233,7 +233,10 @@ class SlideWizard {
     add_shortcode( 'slidewizard', array( &$this, 'shortcode' ) );
 
     add_action( "media_buttons", array( &$this, "media_button" ), 19 );
-
+		
+		// Add SlideWizard Documentation
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'slidewizard_action_links' ) );
+		
     // Hook when plugin activated
     register_activation_hook( __FILE__, array( &$this, 'activate' ) );
   }
@@ -368,7 +371,15 @@ class SlideWizard {
     }
   }
 
+	function slidewizard_action_links( $links ) {
 
+		$plugin_links = array(
+			'<a href="http://colorlabsproject.com/documentation/slidewizard/" target="_blank">' . __( 'Documentation' ) . '</a>'
+		);
+
+		return array_merge( $plugin_links, $links );
+	}
+	
   /**
    * Load javascripts for slidewizard options page
    * 
@@ -466,7 +477,7 @@ class SlideWizard {
 
     // If user role can manage options
     if( $show_menu === true ) {
-      add_menu_page( 'Manage SlideWizard', 'SlideWizard', 'publish_posts', SLIDEWIZARD_PLUGIN_NAME, array( &$this, 'page_route' ), '', 40 );
+      add_menu_page( 'Manage SlideWizard', 'SlideWizard', 'publish_posts', SLIDEWIZARD_PLUGIN_NAME, array( &$this, 'page_route' ), plugin_dir_url( __FILE__ )."images/menu-icon.png", 40 );
     }
   }
 
@@ -765,7 +776,7 @@ class SlideWizard {
 
     $filtered = array();
     foreach( $themes as $theme ) {
-      $themes_intersect = array_intersect( $slidewizard['source'], $theme['meta']['sources'] );
+      $themes_intersect = array_intersect( (array)$slidewizard['source'], $theme['meta']['sources'] );
       if( !empty( $themes_intersect ) ) {
         $filtered[] = $theme;
       }
