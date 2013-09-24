@@ -39,7 +39,7 @@ window.SlideWizardAdmin = {
       placement: 'left',
       html: true,
       content: function(){
-        return slidewizard_message.use_slide + '<pre>[slidewizard='+ $(this).data('id') +']</pre>';
+        return slidewizard_message.use_slide + '<pre>[slidewizard id='+ $(this).data('id') +']</pre>';
       }
     }).parent().mouseleave(function(){
       $(this).find('.slidewizard-use').popover('hide');
