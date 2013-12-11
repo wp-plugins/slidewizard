@@ -3,7 +3,7 @@
 Plugin Name: SlideWizard
 Plugin URI: http://colorlabsproject.com/plugins/slidewizard/
 Description: SlideWizard helps you to create beautiful slider from various source. 
-Version: 1.0.2
+Version: 1.1.0
 Author: ColorLabs & Company
 Author URI: http://colorlabsproject.com/
 Text Domain: slidewizard
@@ -44,10 +44,10 @@ class SlideWizard {
 
   public $post_type;
 
-  static $namespace = "slidewizard";
+  public $namespace = "slidewizard";
   static $friendly_name = "SlideWizard";
   
-  static $version = '1.0.2';
+  static $version = '1.1.0';
 
   // Environment, 'development' or 'production'
   // Don't forget to change back to production
@@ -106,9 +106,6 @@ class SlideWizard {
    */
   function __construct() {
     SlideWizard::load_constant();
-
-    $this->friendly_name = SlideWizard::$friendly_name;
-    $this->namespace = SlideWizard::$namespace;
 
     /**
      * Make this plugin available for translation.
@@ -213,6 +210,7 @@ class SlideWizard {
     add_action( "wp_ajax_{$this->namespace}_delete-slide", array( &$this, 'ajax_delete_slide' ) );
     add_action( "wp_ajax_{$this->namespace}_preview-iframe", array( &$this, 'ajax_preview_iframe' ) );
     add_action( "wp_ajax_{$this->namespace}_preview-iframe-update", array( &$this, 'ajax_preview_iframe_update' ) );
+    add_action( "wp_ajax_{$this->namespace}_get_theme_options", array( &$this, 'ajax_get_theme_options' ) );
     add_action( "wp_ajax_{$this->namespace}_insert-iframe", array( &$this, 'ajax_insert_iframe' ) );
 
     // Front-end only actions
@@ -739,6 +737,20 @@ class SlideWizard {
     exit;
   }
 
+
+  /**
+   * Ajax action for receiving options for specific SlideWizard Themes
+   */
+  function ajax_get_theme_options() {
+    $slide_id = intval( $_REQUEST['id'] );
+    $slidewizard = $this->Slides->save_preview( $slide_id, $_REQUEST );
+    $sizes = apply_filters( "{$this->namespace}_sizes", $this->sizes, $slidewizard );
+    $themes = $this->get_slidewizard_themes( $slidewizard );
+    $options = $this->get_options( $slidewizard );
+
+    include( SLIDEWIZARD_PLUGIN_DIR . "/views/partials/_options.php" );
+    exit;
+  }
 
 
   /**
