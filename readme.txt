@@ -19,6 +19,8 @@ Shortcode is used to show the slider on post or page. You can insert multiple sl
 
 If you'd like to check out the code and contribute, [join us on GitHub](https://github.com/mambows/slidewizard). Pull requests, issues, and plugin recommendations are more than welcome!
 
+[youtube http://www.youtube.com/watch?v=SZSkjrqU5f0]
+
 == Manual Installation ==
 
 The manual installation method involves downloading our feature-rich plugin and uploading it to your webserver via your favourite FTP application.
