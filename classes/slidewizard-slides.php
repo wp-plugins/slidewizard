@@ -384,7 +384,13 @@ class Slides {
       $post_args['post_parent'] = $data['post_parent'];
 
     // Save the SlideWizard post type
-    wp_update_post( $post_args );
+    $slide_id = wp_update_post( $post_args );
+
+    // If Failed to save the Slider
+    if( !$slide_id ) {
+      unset( $post_args['ID'] );
+      $slide_id = wp_insert_post( $post_args );
+    }
 
     // Save the content source
     $sources = $this->get_sources( $slide_id );
@@ -721,7 +727,7 @@ class Slides {
     $slides = $this->fetch_slides( $slidewizard );
 
     $themes = $SlideWizard->Themes->get( $slidewizard['themes'] );
-
+    
     // Class for SlideWizard wrapper
     $wrapper_classes = array(
       'slidewizard-wrapper'
@@ -800,6 +806,7 @@ class Slides {
       $navigation_classes[] = "slidewizard-nav-{$slidewizard['options']['navigation_position']}";
 
       $html .= '<div class="slidewizard-navigation '. implode(' ', $navigation_classes) .'">';
+      $html .= apply_filters( "{$this->namespace}_render_slidewizard_navigation", "", $slides, $slidewizard );
       $html .= '</div>'; // End slidewizard-navigation
     }
 
@@ -834,6 +841,7 @@ class Slides {
 
       // Enqueue the SlideWizard Themes
       wp_enqueue_style( "{$this->namespace}-themes-{$themes['slug']}" );
+      wp_enqueue_script( "{$this->namespace}-themes-js-{$themes['slug']}" );
 
       // Print javascript for SlideWizard themes
       if( isset( $themes['script_url'] ) && !empty( $themes['script_url'] ) ) {
