@@ -2,8 +2,7 @@
  * Script for handling Preview update for SlideWizard
  * 
  */
-
-(function($){
+(function ($) { 
 window.SlideWizardPreview = {
   $el: {},
   outerWidth: 0,
@@ -11,6 +10,7 @@ window.SlideWizardPreview = {
   updates: {},
   validations: {},
   ajaxOptions: [
+    "themes",
     "options[size]",
     "options[width]",
     "options[height]",
@@ -31,6 +31,7 @@ window.SlideWizardPreview = {
     "options[date_format]"
   ],
   isLoadingAjax: false,
+  currentTheme: '',
 
   /**
    * Event Binding
@@ -42,6 +43,7 @@ window.SlideWizardPreview = {
     this.$el.form
       .on( 'change', 'select', $.proxy( this.events.inputSelect, this ) )
       .on( 'blur change', 'input[type="text"]', $.proxy( this.events.inputText, this ) )
+      .on( 'change', ':radio', $.proxy( this.events.change_theme, this ) )
       .on( 'keydown', 'input[type="text"]', this.events.preventEnterKey )
       .on( 'click', 'input[type="radio"], input[type="checkbox"]', $.proxy( this.events.inputRadioCheckbox, this ) )
       .on( 'click', '.slidewizard-ajax-update', function(event){
@@ -90,6 +92,23 @@ window.SlideWizardPreview = {
     },
 
     /**
+     * Change SlideWizard Theme
+     */
+    change_theme: function(event) {
+      var $radio = $(event.currentTarget),
+          $label = $radio.parent();
+      
+      // Remove All active radio
+      $label.siblings().removeClass('active');
+
+      // Add active class for current radio
+      $label.addClass('active');
+
+      // Change the Previewer
+      this.update(event.currentTarget, event.currentTarget.value);
+    },
+
+    /**
      * Iframe On Load
      */
     iframeOnLoad: function() {
@@ -100,7 +119,7 @@ window.SlideWizardPreview = {
 
       this.$el.iframeBody.find('.overlay-loader').removeClass('loading');
 
-      this.$el.slidewizard.find('.slidewizard-slide-item a').click(function(event){
+      this.$el.slidewizard.find('.slidewizard-slide-item a[href]').click(function(event){
         event.preventDefault();
         return false;
       }).attr('title', 'Links disabled for preview');
@@ -182,8 +201,9 @@ window.SlideWizardPreview = {
    * Ajax update
    */
   ajaxUpdate: function(elem, value) {
-    var _this = this;
-    
+    var _this = this,
+        selectedThemes = this.$el.form.find('[name="themes"]:checked').val();
+
     if( _this.isLoadingAjax ) {
       return false;
     }
@@ -197,6 +217,7 @@ window.SlideWizardPreview = {
 
       _this.$el.iframeBody.find('.overlay-loader').addClass('loading');
 
+      // Update Slider Preview
       $.ajax({
         url: ajaxurl,
         type: "GET",
@@ -224,6 +245,26 @@ window.SlideWizardPreview = {
           _this.isLoadingAjax = false;
         }
       });
+
+      // Only update the options HTML when theme is changed
+      if( selectedThemes != _this.currentTheme ) {
+        data = data.replace(/action\=([a-zA-Z0-9\-_]+)/gi, 'action=slidewizard_get_theme_options');
+        _this.currentTheme = selectedThemes;
+        $.ajax({
+          url: ajaxurl,
+          type: "GET",
+          data: data,
+          cache: false,
+          success: function( html ) {
+            // Update options
+            _this.$el.form.find('#slidewizard-options .accordion-inner').html( html );
+
+            // Reinitiate script for options
+            SlideWizardAdmin.input_slider();
+            SlideWizardAdmin.input_radio();
+          }
+        });
+      }
     });
   },
 
@@ -235,6 +276,9 @@ window.SlideWizardPreview = {
 
     this.$el.previewIframe = $('#slidewizard-preview-iframe');
     this.$el.form = $('#slidewizard-slide-form');
+
+    // Set Current Theme
+    this.currentTheme = this.$el.form.find('[name="themes"]:checked').val();
 
     // Return false if slide form not exists
     if( !this.$el.form.length ) {

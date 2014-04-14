@@ -19,8 +19,6 @@ Shortcode is used to show the slider on post or page. You can insert multiple sl
 
 If you'd like to check out the code and contribute, [join us on GitHub](https://github.com/mambows/slidewizard). Pull requests, issues, and plugin recommendations are more than welcome!
 
-[youtube http://www.youtube.com/watch?v=SZSkjrqU5f0]
-
 == Manual Installation ==
 
 The manual installation method involves downloading our feature-rich plugin and uploading it to your webserver via your favourite FTP application.
@@ -40,13 +38,15 @@ Automatic updates should work a charm; as always though, ensure you backup your 
 3. Insert your SlideWizard into the post.
 
 == Changelog ==
+= 1.1.2 =
+* Add: 3 new Slider Source; Vimeo, Youtube and 500px
+
 = 1.1.1 =
 * Fix: Javascript not loaded when Slider called using do_shortcode
 
 = 1.1.0 =
 * Add: Rounded Theme, rounded slider with animated rounded thumbnails
 * Add: Thumbnail Theme, slider with thumbnail navigation
-* Add: 3 new Slider Source; Vimeo, Youtube and 500px
 * Fix: Slider sometimes can't be saved if user not save the slider immedietally
 
 = 1.0.2 =
