@@ -1,0 +1,33 @@
+*** SlideWizard Changelog ***
+
+2014.02.06 - Version 1.1.1
+- Fix: Javascript not loaded when Slider called using do_shortcode
+  File Affected: classes/slidewizard-slides.php
+
+2013.12.11 - Version 1.1.0
+- Add: Rounded Theme, rounded slider with animated rounded thumbnails
+  Folder Added: themes/rounded
+- Add: Thumbnail Theme, slider with thumbnail navigation
+  Folder Added: themes/thumbnail
+- Add: 3 new Slider Source; Vimeo, Youtube and 500px
+  Folders Added: source/vimeo, source/youtube, source/500px
+- Fix: Slider sometimes can't be saved if user not save the slider immedietally
+  File Affected: classes/slidewizard-slides.php
+
+2013.09.24 - Version 1.0.2
+- Add: Documentation Link
+  File Affected: slidewizard.php
+- Fix: Update Dashboard Style
+	File Added: twitter.png
+  Files Affected: slidewizard-admin-script.js, slidewizard-admin-style.css, dashboard.php, slide-form.php 
+	
+2013.09.09 - Version 1.0.1
+- Fix: Bug Preview Slidewizard!
+  File Affected: preview-iframe.php
+- Fix: Icon Menu
+  File Affected: slidewizard.php
+- Update Dashboard Style 
+  File Affected: style.css
+  
+2012.01.25 - Version 1.0.0
+- First Release!
