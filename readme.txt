@@ -38,6 +38,7 @@ Automatic updates should work a charm; as always though, ensure you backup your 
 3. Insert your SlideWizard into the post.
 
 == Changelog ==
+
 = 1.1.2 =
 * Add: 3 new Slider Source; Vimeo, Youtube and 500px
 
