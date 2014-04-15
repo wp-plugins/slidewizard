@@ -39,6 +39,9 @@ Automatic updates should work a charm; as always though, ensure you backup your 
 
 == Changelog ==
 
+= 1.1.3 =
+* Update New Plugin Panel
+
 = 1.1.2 =
 * Add: 3 new Slider Source; Vimeo, Youtube and 500px
 

@@ -1,5 +1,8 @@
 *** SlideWizard Changelog ***
 
+2014.04.14 - Version 1.1.3
+- Update New Plugin Panel
+
 2014.04.14 - Version 1.1.2
 - Add: 3 new Slider Source; Vimeo, Youtube and 500px
   Folders Added: source/vimeo, source/youtube, source/500px
