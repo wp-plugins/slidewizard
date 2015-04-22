@@ -29,8 +29,8 @@ class SlideWizardThemes_Rounded extends SlideWizardThemes_Helper {
   function __construct() {
     parent::__construct();
 
-    add_filter('slidewizard_render_slidewizard_before', array( &$this, 'render_before'), 10, 2 );
-    add_filter('slidewizard_render_slidewizard_after', array( &$this, 'render_after'), 10, 2 );
+    add_filter('slidewizard_render_slidewizard_before', array( $this, 'render_before'), 10, 2 );
+    add_filter('slidewizard_render_slidewizard_after', array( $this, 'render_after'), 10, 2 );
   }
 
   /**

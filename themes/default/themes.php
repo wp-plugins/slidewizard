@@ -7,7 +7,7 @@ class SlideWizardThemes_Default extends SlideWizardThemes_Helper {
 
   function __construct(){
     parent::__construct();
-    // add_filter( "{$this->namespace}_get_slides", array( &$this, "slidewizard_get_slides" ), 11, 2 );
+    // add_filter( "{$this->namespace}_get_slides", array( $this, "slidewizard_get_slides" ), 11, 2 );
   }
 
   function slidewizard_dimensions( &$width, &$height, &$outer_width, &$outer_height, &$slidewizard ) {

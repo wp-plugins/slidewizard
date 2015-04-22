@@ -3,14 +3,14 @@
 Plugin Name: SlideWizard
 Plugin URI: http://colorlabsproject.com/plugins/slidewizard/
 Description: SlideWizard helps you to create beautiful slider from various source. 
-Version: 1.1.3
+Version: 1.1.4
 Author: ColorLabs & Company
 Author URI: http://colorlabsproject.com/
 Text Domain: slidewizard
 */
 
 /**
- * Copyright (c) 2013 ColorLabs & Company. All rights reserved.
+ * Copyright (c) 2015 ColorLabs & Company. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -47,7 +47,7 @@ class SlideWizard {
   public $namespace = "slidewizard";
   static $friendly_name = "SlideWizard";
   
-  static $version = '1.1.3';
+  static $version = '1.1.4';
 
   // Environment, 'development' or 'production'
   // Don't forget to change back to production
@@ -184,60 +184,60 @@ class SlideWizard {
   function add_hooks( ) {
 
     // Add page custom options page
-    add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
+    add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
     // Register all JavaScript files used by this plugin
-    add_action( 'init', array( &$this, 'wp_register_scripts' ), 1 );
+    add_action( 'init', array( $this, 'wp_register_scripts' ), 1 );
 
     // Register all Stylesheets used by this plugin
-    add_action( 'init', array( &$this, 'wp_register_styles' ), 1 );
+    add_action( 'init', array( $this, 'wp_register_styles' ), 1 );
 
     // Add custom post type
-    add_action( 'init', array( &$this, 'register_post_types' ) );
+    add_action( 'init', array( $this, 'register_post_types' ) );
 
     // Route requests for form processing
-    add_action( 'init', array( &$this, 'route' ) );
+    add_action( 'init', array( $this, 'route' ) );
 
     // Hook into slidewizard source control
-    add_action( "{$this->namespace}_source_control", array( &$this, 'slidewizard_source_control' ) );
+    add_action( "{$this->namespace}_source_control", array( $this, 'slidewizard_source_control' ) );
 
     // Enqueue javascripts and stylesheets on specific page
-    add_action( 'admin_print_scripts-toplevel_page_' . SLIDEWIZARD_PLUGIN_NAME, array( &$this, 'admin_print_scripts' ) );
-    add_action( 'admin_print_styles-toplevel_page_' . SLIDEWIZARD_PLUGIN_NAME, array( &$this, 'admin_print_styles' ) );
+    add_action( 'admin_print_scripts-toplevel_page_' . SLIDEWIZARD_PLUGIN_NAME, array( $this, 'admin_print_scripts' ) );
+    add_action( 'admin_print_styles-toplevel_page_' . SLIDEWIZARD_PLUGIN_NAME, array( $this, 'admin_print_styles' ) );
 
     // AJAX Action Hooks
-    add_action( "wp_ajax_{$this->namespace}_source-modal", array( &$this, 'ajax_source_modal' ) );
-    add_action( "wp_ajax_{$this->namespace}_delete-slide", array( &$this, 'ajax_delete_slide' ) );
-    add_action( "wp_ajax_{$this->namespace}_preview-iframe", array( &$this, 'ajax_preview_iframe' ) );
-    add_action( "wp_ajax_{$this->namespace}_preview-iframe-update", array( &$this, 'ajax_preview_iframe_update' ) );
-    add_action( "wp_ajax_{$this->namespace}_get_theme_options", array( &$this, 'ajax_get_theme_options' ) );
-    add_action( "wp_ajax_{$this->namespace}_insert-iframe", array( &$this, 'ajax_insert_iframe' ) );
+    add_action( "wp_ajax_{$this->namespace}_source-modal", array( $this, 'ajax_source_modal' ) );
+    add_action( "wp_ajax_{$this->namespace}_delete-slide", array( $this, 'ajax_delete_slide' ) );
+    add_action( "wp_ajax_{$this->namespace}_preview-iframe", array( $this, 'ajax_preview_iframe' ) );
+    add_action( "wp_ajax_{$this->namespace}_preview-iframe-update", array( $this, 'ajax_preview_iframe_update' ) );
+    add_action( "wp_ajax_{$this->namespace}_get_theme_options", array( $this, 'ajax_get_theme_options' ) );
+    add_action( "wp_ajax_{$this->namespace}_insert-iframe", array( $this, 'ajax_insert_iframe' ) );
 
     // Front-end only actions
     if( !is_admin() ) {
       // Pre-loading for themes use by SlideWizard in post or page
-      add_action( 'wp', array( &$this, 'wp_hook' ) );
+      add_action( 'wp', array( $this, 'wp_hook' ) );
 
       // Print required themes stylesheets
-      add_action( 'wp_print_styles', array( &$this, 'wp_print_styles' ) );
+      add_action( 'wp_print_styles', array( $this, 'wp_print_styles' ) );
     }
 
     // Append scripts for slidewizard initiation at the footer
-    add_action( 'wp_print_footer_scripts', array( &$this, 'print_footer_scripts' ) );
+    add_action( 'wp_print_footer_scripts', array( $this, 'print_footer_scripts' ) );
 
     // Add required JavaScripts and Stylesheets for displaying SlideWizards in front-end
-    add_action( 'wp_print_scripts', array( &$this, 'wp_print_scripts' ) );
+    add_action( 'wp_print_scripts', array( $this, 'wp_print_scripts' ) );
 
     // Add SlideWizard shortcode
-    add_shortcode( 'slidewizard', array( &$this, 'shortcode' ) );
+    add_shortcode( 'slidewizard', array( $this, 'shortcode' ) );
 
-    add_action( "media_buttons", array( &$this, "media_button" ), 19 );
+    add_action( "media_buttons", array( $this, "media_button" ), 19 );
 		
 		// Add SlideWizard Documentation
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'slidewizard_action_links' ) );
 		
     // Hook when plugin activated
-    register_activation_hook( __FILE__, array( &$this, 'activate' ) );
+    register_activation_hook( __FILE__, array( $this, 'activate' ) );
   }
 
 
@@ -476,7 +476,7 @@ class SlideWizard {
 
     // If user role can manage options
     if( $show_menu === true ) {
-      $hook = add_menu_page( 'Manage SlideWizard', 'SlideWizard', 'publish_posts', SLIDEWIZARD_PLUGIN_NAME, array( &$this, 'page_route' ), plugin_dir_url( __FILE__ )."images/menu-icon.png", 40 );
+      $hook = add_menu_page( 'Manage SlideWizard', 'SlideWizard', 'publish_posts', SLIDEWIZARD_PLUGIN_NAME, array( $this, 'page_route' ), plugin_dir_url( __FILE__ )."images/menu-icon.png", 40 );
 
       // Hook into admin color scheme
       add_action('admin_print_scripts-' . $hook, array( $this, 'add_admin_color_schemes' ));

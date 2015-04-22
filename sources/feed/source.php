@@ -16,7 +16,7 @@ class SlideWizardSource_Feed extends Slides {
 
 
   function add_hooks() {
-    add_action( "{$this->namespace}_form_content_source", array( &$this, "slidewizard_form_content_source" ), 10, 2 );
+    add_action( "{$this->namespace}_form_content_source", array( $this, "slidewizard_form_content_source" ), 10, 2 );
   }
 
 
@@ -60,10 +60,12 @@ class SlideWizardSource_Feed extends Slides {
 
     // Set temporary reference to current slidewizard, so it can be accessed from wp_feed_options
     $this->current_slidewizard = $slidewizard;
-    add_action( 'wp_feed_options', array( &$this, 'wp_feed_options' ), 10, 2 );
+    add_action( 'wp_feed_options', array( $this, 'wp_feed_options' ), 10, 2 );
+    
     // Fetch RSS
     $rss = fetch_feed( $feed_url );
-    remove_action( 'wp_feed_options', array( &$this, 'wp_feed_options' ) , 10, 2 );
+    remove_action( 'wp_feed_options', array( $this, 'wp_feed_options' ) , 10, 2 );
+
     // Remove temporary reference
     unset( $this->current_slidewizard );
 
@@ -99,7 +101,7 @@ class SlideWizardSource_Feed extends Slides {
     } else {
       return false;
     }
-
+    
     return $feed;
   }
 
@@ -168,7 +170,12 @@ class SlideWizardSource_Feed extends Slides {
       // Link target
       $slide_item['target'] = $slidewizard['options']['open_link_in'];
 
-      $slide['thumbnail'] = $slide_item['image'];
+      if( isset( $slide_item['image'] ) ) {
+        $slide['thumbnail'] = $slide_item['image'];
+      } else {
+        $slide['thumbnail'] = '';
+      }
+      
       $slide['content'] = $SlideWizard->Themes->process_template( $slide_item, $slidewizard );
 
       $slides[] = $slide;

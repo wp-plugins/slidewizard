@@ -285,7 +285,9 @@
   margin-right: 15px;
 }
 .themes-thumbnail.slidewizard-source-twitter .slide-inner-wrapper {
-  overflow: hidden
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .themes-thumbnail.slidewizard-source-twitter .slide-meta {
   margin-bottom: 0;

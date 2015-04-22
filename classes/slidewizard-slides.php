@@ -54,33 +54,33 @@ class Slides {
     include( SLIDEWIZARD_PLUGIN_DIR . "/includes/slide-options.php" );
     $this->options = $options;
 
-    add_action( 'admin_init', array( &$this, '_admin_init' ) );
-    add_action( 'admin_print_scripts-toplevel_page_' .SLIDEWIZARD_PLUGIN_NAME, array( &$this, '_admin_print_scripts' )  );
-    add_action( 'admin_print_styles-toplevel_page_' .SLIDEWIZARD_PLUGIN_NAME, array( &$this, '_admin_print_styles' )  );
+    add_action( 'admin_init', array( $this, '_admin_init' ) );
+    add_action( 'admin_print_scripts-toplevel_page_' .SLIDEWIZARD_PLUGIN_NAME, array( $this, '_admin_print_scripts' )  );
+    add_action( 'admin_print_styles-toplevel_page_' .SLIDEWIZARD_PLUGIN_NAME, array( $this, '_admin_print_styles' )  );
 
     // Cleanup unsaved slides
-    add_action( "{$this->namespace}_cleanup_create", array( &$this, 'cleanup_create'), 20, 1 );
+    add_action( "{$this->namespace}_cleanup_create", array( $this, 'cleanup_create'), 20, 1 );
 
     // Hook for modifying options array
     if( method_exists( $this, 'slidewizard_slide_options' ) )
-      add_filter( "{$this->namespace}_slide_options", array( &$this, 'slidewizard_slide_options' ), 11, 2 );
+      add_filter( "{$this->namespace}_slide_options", array( $this, 'slidewizard_slide_options' ), 11, 2 );
 
     // Set default options when merged with options from source
-    add_filter( "{$this->namespace}_default_options", array( &$this, '_slidewizard_default_options' ), 10, 3 );
+    add_filter( "{$this->namespace}_default_options", array( $this, '_slidewizard_default_options' ), 10, 3 );
     if( method_exists( $this, 'slidewizard_default_options') )
-      add_filter( "{$this->namespace}_default_options", array( &$this, 'slidewizard_default_options' ), 11, 3 );
+      add_filter( "{$this->namespace}_default_options", array( $this, 'slidewizard_default_options' ), 11, 3 );
 
     // Define the basedir for the source
     if( method_exists( $this, 'slidewizard_get_source_file_basedir' ) )
-      add_filter( "{$this->namespace}_get_source_file_basedir", array( &$this, 'slidewizard_get_source_file_basedir' ), 10, 2 );
+      add_filter( "{$this->namespace}_get_source_file_basedir", array( $this, 'slidewizard_get_source_file_basedir' ), 10, 2 );
 
     // Define baseurl for the source
     if( method_exists( $this, 'slidewizard_get_source_file_baseurl' ) )
-      add_filter( "{$this->namespace}_get_source_file_baseurl", array( &$this, 'slidewizard_get_source_file_baseurl' ), 10, 2 );
+      add_filter( "{$this->namespace}_get_source_file_baseurl", array( $this, 'slidewizard_get_source_file_baseurl' ), 10, 2 );
 
     // Filter slide output depend on source
     if( method_exists( $this, 'slidewizard_get_slides') )
-      add_filter( "{$this->namespace}_get_slides", array( &$this, 'slidewizard_get_slides' ), 10, 2 );
+      add_filter( "{$this->namespace}_get_slides", array( $this, 'slidewizard_get_slides' ), 10, 2 );
 
     if( method_exists( $this, 'add_hooks' ) )
       $this->add_hooks();
@@ -281,7 +281,7 @@ class Slides {
     ) );
 
     if( $post_status == 'auto-draft' ) {
-      wp_schedule_single_event( time() + 30, "{$this->namespace}_cleanup_create", array( $slide_id ) );
+      wp_schedule_single_event( time() + ( 60 * 30 ), "{$this->namespace}_cleanup_create", array( $slide_id ) );
     }
 
     // Set SlideWizard Source
@@ -626,7 +626,7 @@ class Slides {
       shuffle( $slides );
     } else {
       // Sort the slides by time
-      usort( $slides, array( &$this, '_sort_by_time' ) );
+      usort( $slides, array( $this, '_sort_by_time' ) );
     }
     
     return $slides;

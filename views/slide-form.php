@@ -64,7 +64,7 @@
     
     <div class="slidewizard-footer">
       <a class="cl-logo" href="http://colorlabsproject.com/" target="_blank">
-        <img src="<?php echo SLIDEWIZARD_PLUGIN_URL . '/images/colorlabs.png' ;?>">
+        <img src="<?php echo SLIDEWIZARD_PLUGIN_URL . '/images/colorlabs.png' ;?>" width="170">
       </a>
     </div>
   </div><!-- .slidewizard-form -->

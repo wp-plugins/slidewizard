@@ -23,7 +23,7 @@ class SlideWizardSource_Youtube extends Slides {
    * Add Hooks
    */
   function add_hooks() {
-    add_action( "{$this->namespace}_form_content_source", array( &$this, "slidewizard_form_content_source" ), 10, 2 );
+    add_action( "{$this->namespace}_form_content_source", array( $this, "slidewizard_form_content_source" ), 10, 2 );
   }
 
   /**
@@ -108,12 +108,12 @@ class SlideWizardSource_Youtube extends Slides {
    */
   function get_slides_item( $slidewizard ) {
     $username = $slidewizard['options']['username'];
-    $user_channel = $this->youtube_api( 'channels', 'id,snippet,contentDetails', array( 'forUsername' => $username ) );
+    $user_channel = $this->youtube_api( $slidewizard, 'channels', 'id,snippet,contentDetails', array( 'forUsername' => $username ) );
     $slides = array();
 
     if( $user_channel['error'] == 'false' ) {
       $user_channel_id = $user_channel['data']->items[0]->contentDetails->relatedPlaylists->uploads;
-      $user_uploaded_videos = $this->youtube_api( 'playlistItems', 'id,snippet,contentDetails', array( 
+      $user_uploaded_videos = $this->youtube_api( $slidewizard, 'playlistItems', 'id,snippet,contentDetails', array( 
         'playlistId' => $user_channel_id,
         'maxResults' => $slidewizard['options']['number_of_slides']
       ) );
@@ -220,7 +220,7 @@ class SlideWizardSource_Youtube extends Slides {
    * @param  array  $params Extra parameter
    * @return object         API Result
    */
-  public function youtube_api( $type = '', $part = '', $params = array() ) {
+  public function youtube_api( $slidewizard, $type = '', $part = '', $params = array() ) {
     $url = "{$this->youtube_api_url}{$type}?part={$part}&key={$this->server_key}";
     $url = add_query_arg( $params, $url );
     $return = array(

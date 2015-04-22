@@ -129,7 +129,9 @@
   margin-right: 15px;
 }
 .themes-default.slidewizard-source-twitter .slide-inner-wrapper {
-  overflow: hidden
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .themes-default.slidewizard-source-twitter .slide-meta {
   margin-bottom: 0;

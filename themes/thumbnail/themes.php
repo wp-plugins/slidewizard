@@ -10,7 +10,7 @@ class SlideWizardThemes_Thumbnail extends SlideWizardThemes_Helper {
   function __construct() {
     parent::__construct();
 
-    add_filter( "{$this->namespace}_render_slidewizard_navigation", array( &$this, 'render_slide_nav' ), 10, 3 );
+    add_filter( "{$this->namespace}_render_slidewizard_navigation", array( $this, 'render_slide_nav' ), 10, 3 );
   }
 
   /**

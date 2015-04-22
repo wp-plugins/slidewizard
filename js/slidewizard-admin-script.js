@@ -54,7 +54,7 @@ window.SlideWizardAdmin = {
       var $el = $(this),
           min = ($el.data('min')) ? $el.data('min') : '',
           max = ($el.data('max')) ? $el.data('max') : '',
-          step = ($el.data('step')) ? $el.data('step'): 0;
+          step = ($el.data('step')) ? $el.data('step'): 1;
 
       $el.slider({
         min: min,

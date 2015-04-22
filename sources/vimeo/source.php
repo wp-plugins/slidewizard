@@ -21,7 +21,7 @@ class SlideWizardSource_Vimeo extends Slides {
    * Add Hooks
    */
   function add_hooks() {
-    add_action( "{$this->namespace}_form_content_source", array( &$this, "slidewizard_form_content_source" ), 10, 2 );
+    add_action( "{$this->namespace}_form_content_source", array( $this, "slidewizard_form_content_source" ), 10, 2 );
   }
 
   /**
@@ -106,37 +106,39 @@ class SlideWizardSource_Vimeo extends Slides {
    */
   function get_slides_item( $slidewizard ) {
     $username = $slidewizard['options']['username'];
-    $user_videos = $this->vimeo_simple_api( $username );
+    $user_videos = $this->vimeo_simple_api( $slidewizard, $username );
     $slides = array();
 
     if( $user_videos['error'] == 'false' ) {
-      foreach( $user_videos['data'] as $index => $video ) {
-        $video_embed_url = add_query_arg( array(
-          'wmode' => 'opaque',
-          'badge' => '0',
-          'byline' => '0',
-          'player_id' => $video->id,
-          'title' => '0',
-          'portrait' => '0',
-          'api' => '1'
-        ), '//player.vimeo.com/video/' . $video->id );
+      if( is_array( $user_videos['data'] ) && count( $user_videos['data'] ) ) {
+        foreach( $user_videos['data'] as $index => $video ) {
+          $video_embed_url = add_query_arg( array(
+            'wmode' => 'opaque',
+            'badge' => '0',
+            'byline' => '0',
+            'player_id' => $video->id,
+            'title' => '0',
+            'portrait' => '0',
+            'api' => '1'
+          ), '//player.vimeo.com/video/' . $video->id );
 
-        $slides[ $index ] = array(
-          'id' => $video->id,
-          'title' => $video->title,
-          'image' => $video->thumbnail_large,
-          'video_embed' => '<iframe id="'. $video->id .'" src="'. $video_embed_url .'" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>',
-          'permalink' => $video->url,
-          'author_id' => $video->user_id,
-          'author_name' => $video->user_name,
-          'author_url' => $video->user_url,
-          'author_avatar' => '<img src="'.$video->user_portrait_large.'">',
-          'content' => $video->description,
-          'created_at' => strtotime( $video->upload_date ),
-          'local_created_at' => $video->upload_date
-        );
+          $slides[ $index ] = array(
+            'id' => $video->id,
+            'title' => $video->title,
+            'image' => $video->thumbnail_large,
+            'video_embed' => '<iframe id="'. $video->id .'" src="'. $video_embed_url .'" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>',
+            'permalink' => $video->url,
+            'author_id' => $video->user_id,
+            'author_name' => $video->user_name,
+            'author_url' => $video->user_url,
+            'author_avatar' => '<img src="'.$video->user_portrait_large.'">',
+            'content' => $video->description,
+            'created_at' => strtotime( $video->upload_date ),
+            'local_created_at' => $video->upload_date
+          );
 
-        if( ($index + 1) == $slidewizard['options']['number_of_slides'] ) break;
+          if( ($index + 1) == $slidewizard['options']['number_of_slides'] ) break;
+        }
       }
     }
 
@@ -196,7 +198,7 @@ class SlideWizardSource_Vimeo extends Slides {
    * @param  string $output   Output type. JSON, PHP, and XML
    * @return [type]           [description]
    */
-  public function vimeo_simple_api( $username, $request = "videos", $output = 'json' ) {
+  public function vimeo_simple_api( $slidewizard, $username, $request = "videos", $output = 'json' ) {
     $url = "{$this->vimeo_api_url}{$username}/{$request}.{$output}";
     $return = array( 'error' => 'true' );
 

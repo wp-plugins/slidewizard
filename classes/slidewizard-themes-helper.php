@@ -14,33 +14,33 @@ class SlideWizardThemes_Helper {
 
     // Filter sizes depend on selected Themes
     if( method_exists( $this, "slidewizard_sizes" ) )
-      add_filter( "{$this->namespace}_sizes", array( &$this, "slidewizard_sizes" ), 20, 2 );
+      add_filter( "{$this->namespace}_sizes", array( $this, "slidewizard_sizes" ), 20, 2 );
 
     // Filter options
     if( method_exists( $this, "slidewizard_slide_options" ) )
-      add_filter( "{$this->namespace}_slide_options", array( &$this, "slidewizard_slide_options" ), 20, 2 );
+      add_filter( "{$this->namespace}_slide_options", array( $this, "slidewizard_slide_options" ), 20, 2 );
 
     // Default SlideWizard options
     if( method_exists( $this, "slidewizard_default_options") )
-      add_filter( "{$this->namespace}_default_options", array( &$this, "slidewizard_default_options" ), 20, 3 );
+      add_filter( "{$this->namespace}_default_options", array( $this, "slidewizard_default_options" ), 20, 3 );
 
     if( method_exists( $this, "slidewizard_dimensions" ) )
-      add_action( "{$this->namespace}_dimensions", array( &$this, "slidewizard_dimensions" ), 20, 5 );
+      add_action( "{$this->namespace}_dimensions", array( $this, "slidewizard_dimensions" ), 20, 5 );
 
     // Hook into slidewizard wrapper classes
     if( method_exists( $this, "slidewizard_wrapper_classes" ) )
-      add_action( "{$this->namespace}_wrapper_classes", array( &$this, "slidewizard_wrapper_classes" ), 20, 2 );
+      add_action( "{$this->namespace}_wrapper_classes", array( $this, "slidewizard_wrapper_classes" ), 20, 2 );
 
     // Merge size and options
-    add_filter( "{$this->namespace}_default_options", array( &$this, "_slidewizard_default_options" ), 19, 3 );
-    add_filter( "{$this->namespace}_sizes", array( &$this, "_slidewizard_sizes" ), 19, 2 );
-    add_filter( "{$this->namespace}_slide_options", array( &$this, "_slidewizard_slide_options" ), 19, 2 );
+    add_filter( "{$this->namespace}_default_options", array( $this, "_slidewizard_default_options" ), 19, 3 );
+    add_filter( "{$this->namespace}_sizes", array( $this, "_slidewizard_sizes" ), 19, 2 );
+    add_filter( "{$this->namespace}_slide_options", array( $this, "_slidewizard_slide_options" ), 19, 2 );
 
     // Register Javascripts used by this themes
-    add_action( 'init', array( &$this, '_slidewizard_register_scripts' ), 1 );
+    add_action( 'init', array( $this, '_slidewizard_register_scripts' ), 1 );
 
     // Register Stylesheets used by this themes
-    add_action( 'init', array( &$this, '_slidewizard_register_styles' ), 1);
+    add_action( 'init', array( $this, '_slidewizard_register_styles' ), 1);
   }
 
   function __get( $name ) {

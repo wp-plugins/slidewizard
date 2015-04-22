@@ -47,7 +47,7 @@ class SlideWizardSource_Posts extends Slides {
 
 
   function add_hooks() {
-    add_action( "{$this->namespace}_form_content_source", array( &$this, "slidewizard_form_content_source" ), 10, 2 );
+    add_action( "{$this->namespace}_form_content_source", array( $this, "slidewizard_form_content_source" ), 10, 2 );
   }
 
 

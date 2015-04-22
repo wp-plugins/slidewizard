@@ -30,8 +30,8 @@ class SlideWizardSource_Instagram extends Slides {
   );
 
   function add_hooks() {
-    add_action( "{$this->namespace}_form_content_source", array( &$this, "slidewizard_form_content_source" ), 10, 2 );
-    add_action( "wp_ajax_{$this->namespace}_get-instagram-token", array( &$this, 'get_instagram_token' ) );
+    add_action( "{$this->namespace}_form_content_source", array( $this, "slidewizard_form_content_source" ), 10, 2 );
+    add_action( "wp_ajax_{$this->namespace}_get-instagram-token", array( $this, 'get_instagram_token' ) );
   }
 
 

@@ -58,6 +58,7 @@ class SlideWizardSource_500px extends Slides {
       "sort" => array(
         "label" => "Sort photos",
         "type" => "select",
+        "default" => "created_at",
         "value" => array(
           "Sort by time of upload, most recent first" => "created_at",
           "Sort by rating, highest rated first" => "rating",
@@ -75,7 +76,7 @@ class SlideWizardSource_500px extends Slides {
    * Add Hooks
    */
   function add_hooks() {
-    add_action( "{$this->namespace}_form_content_source", array( &$this, "slidewizard_form_content_source" ), 10, 2 );
+    add_action( "{$this->namespace}_form_content_source", array( $this, "slidewizard_form_content_source" ), 10, 2 );
   }
 
   /**
@@ -162,9 +163,10 @@ class SlideWizardSource_500px extends Slides {
       'rpp' => $slidewizard['options']['number_of_slides'],
       'image_size' => '4'
     );
+
     foreach( $this->source_options as $section ) {
       foreach( $section as $option_name => $option ) {
-        if( $slidewizard['options'][ $option_name ] != '' && $option_name != 'photo_resources' ) {
+        if( isset( $slidewizard['options'][ $option_name ] ) && $slidewizard['options'][ $option_name ] != '' && $option_name != 'photo_resources' ) {
           $args[ $option_name ] = $slidewizard['options'][ $option_name ];
         }
       }
