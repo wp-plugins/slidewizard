@@ -52,13 +52,13 @@ window.SlideWizardAdmin = {
   input_slider: function() {
     $('.input-slider').each(function(){
       var $el = $(this),
-          min = ($el.data('min')) ? $el.data('min') : '',
-          max = ($el.data('max')) ? $el.data('max') : '',
+          min = ($el.data('min')) ? $el.data('min') : 1,
+          max = ($el.data('max')) ? $el.data('max') : 10,
           step = ($el.data('step')) ? $el.data('step'): 1;
 
       $el.slider({
-        min: 1,
-        max: 10,
+        min: min,
+        max: max,
         step: step,
         value: $el.next('input').val(),
         slide: function(event, ui) {
