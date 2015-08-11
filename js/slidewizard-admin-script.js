@@ -57,8 +57,8 @@ window.SlideWizardAdmin = {
           step = ($el.data('step')) ? $el.data('step'): 1;
 
       $el.slider({
-        min: min,
-        max: max,
+        min: 1,
+        max: 10,
         step: step,
         value: $el.next('input').val(),
         slide: function(event, ui) {
