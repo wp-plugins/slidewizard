@@ -125,7 +125,6 @@ class SlideWizardSource_Youtube extends Slides {
         'description' => $user_channel['data']->items[0]->snippet->description,
         'thumbnails' => $user_channel['data']->items[0]->snippet->thumbnails,
         'permalink' => 'http://www.youtube.com/user/' . $username,
-        'gplus_userid' => $user_channel['data']->items[0]->contentDetails->googlePlusUserId
       );
 
       // Generate Video Data
