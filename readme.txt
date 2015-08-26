@@ -2,7 +2,7 @@
 Contributors: colorlabs
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@colorlabsproject.com&item_name=Donation+for+Laboratory
 Requires at least: WP 3.5.0
-Tested up to: WordPress 4.2.4
+Tested up to: WordPress 4.3.0
 Stable tag: trunk
 License: GPLv3 or later
 Tags: slider, flickr slider, instagram slider, feed slider, rss slider, dribbble slider, posts slider, twitter slider, photo, images 
@@ -38,6 +38,9 @@ Automatic updates should work a charm; as always though, ensure you backup your 
 3. Insert your SlideWizard into the post.
 
 == Changelog ==
+
+= 1.1.6 =
+* Compatibility with WordPress 4.2.3
 
 = 1.1.5 =
 * Compatibility with WordPress 4.2.4
